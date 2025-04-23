@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finn22 - Animation Studio</title>
+    <style>
+        :root {
+            --watermelon-red: #ff4d6d;
+            --watermelon-green: #5c9e6e;
+            --watermelon-light: #ff8fa3;
+            --watermelon-dark: #d90429;
+            --watermelon-pink: #ffb3c6;
+            --black: #161a1d;
+            --white: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--watermelon-red), var(--watermelon-dark));
+            padding: 1.5rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border-bottom: 3px solid var(--watermelon-green);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--white), var(--watermelon-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px var(--watermelon-pink), 0 0 10px var(--watermelon-pink);
+            }
+            to {
+                text-shadow: 0 0 10px var(--watermelon-pink), 0 0 20px var(--watermelon-red), 0 0 30px var(--watermelon-dark);
+            }
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--watermelon-green);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--black);
+            animation: spin 10s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--watermelon-green);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: var(--watermelon-pink);
+        }
+
+        .active-tab {
+            color: var(--watermelon-green);
+        }
+
+        .active-tab::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+
+        /* Main Content Styles */
+        main {
+            margin-top: 100px;
+            min-height: calc(100vh - 200px);
+            padding: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .active-content {
+            display: block;
+        }
+
+        /* Home Tab Styles */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+            border-radius: 15px;
+            background: rgba(92, 158, 110, 0.1);
+            border: 1px solid var(--watermelon-green);
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--watermelon-pink);
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 77, 109, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+            animation: pulse 8s infinite alternate;
+            z-index: 1;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.8); }
+            100% { transform: scale(1.2); }
+        }
+
+        .collaborators {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .collaborator-card {
+            background: rgba(255, 143, 163, 0.1);
+            border: 1px solid var(--watermelon-light);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .collaborator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.2);
+            background: rgba(255, 143, 163, 0.2);
+        }
+
+        .collaborator-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: 0.5s;
+        }
+
+        .collaborator-card:hover::before {
+            left: 100%;
+        }
+
+        .collaborator-card h3 {
+            color: var(--watermelon-pink);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+    .collaborator-card {
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 8px;
+    }
+    
+    .collaborator-card a {
+        color: inherit;
+        text-decoration: none;
+    }
+    
+    .collaborator-card a:hover {
+        text-decoration: underline;
+    }
+
+        /* About Tab Styles */
+        .about-section {
+            margin-bottom: 3rem;
+        }
+
+        .about-section h2 {
+            color: var(--watermelon-green);
+            margin-bottom: 1rem;
+            font-size: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .about-section h2::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(to right, var(--watermelon-green), transparent);
+        }
+
+        .studio-info {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+
+        .studio-info img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 3px solid var(--watermelon-red);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .studio-text {
+            flex: 1;
+        }
+
+        .portfolio {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .portfolio-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.4);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 1rem;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            transform: translateY(0);
+        }
+
+        .upcoming-projects {
+            background: rgba(92, 158, 110, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid var(--watermelon-green);
+            margin-top: 2rem;
+        }
+
+        .project-list {
+            margin-top: 1rem;
+        }
+
+        .project-item {
+            padding: 1rem;
+            border-left: 3px solid var(--watermelon-red);
+            margin-bottom: 1rem;
+            background: rgba(22, 26, 29, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .project-item:hover {
+            background: rgba(255, 77, 109, 0.1);
+            transform: translateX(10px);
+        }
+
+        /* Contacts Tab Styles */
+        .contacts-container {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255, 143, 163, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid var(--watermelon-light);
+        }
+
+        .contact-info h3 {
+            color: var(--watermelon-pink);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            position: relative;
+        }
+
+        .contact-info h3::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--watermelon-green);
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 5px;
+        }
+
+        .contact-method:hover {
+            background: rgba(255, 143, 163, 0.2);
+            transform: translateX(5px);
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--watermelon-red);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--white);
+            font-size: 1.2rem;
+        }
+
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(92, 158, 110, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid var(--watermelon-green);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--watermelon-pink);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--watermelon-light);
+            border-radius: 5px;
+            color: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--watermelon-red);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .submit-btn {
+            background: linear-gradient(to right, var(--watermelon-red), var(--watermelon-dark));
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+        }
+
+        /* Footer Styles */
+        footer {
+            background: linear-gradient(135deg, var(--watermelon-dark), var(--black));
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+            border-top: 3px solid var(--watermelon-green);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--watermelon-red);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px) scale(1.1);
+            background-color: var(--watermelon-green);
+        }
+
+        .copyright {
+            color: var(--watermelon-pink);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+                display: none;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .studio-info {
+                flex-direction: column;
+            }
+
+            .studio-info img {
+                width: 150px;
+                height: 150px;
+            }
+
+            .collaborators {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .collaborators {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info, .contact-form {
+                min-width: 100%;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon floating">🍉</div>
+                <h1>Finn22 Studio</h1>
+            </div>
+            <button class="hamburger" id="hamburger">☰</button>
+            <nav>
+                <ul id="nav-menu">
+                    <li><a href="#" class="nav-link active-tab" data-tab="home">Главная</a></li>
+                    <li><a href="#" class="nav-link" data-tab="about">О нас</a></li>
+                    <li><a href="#" class="nav-link" data-tab="contacts">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Home Tab -->
+        <div class="tab-content active-content" id="home-content">
+            <section class="hero">
+                <h2>Добро пожаловать на сайт Finn22 Studio</h2>
+                <p>Мы создаем анимации и мультфильмы для всех возрастов и сотрудничаем с различными творцами в индустрии развелений. Наш канал - это платформа для креативных идей и инновационных проектов.</p>
+            </section>
+
+            <h2 style="color: var(--watermelon-green); text-align: center; margin-bottom: 1.5rem;">Наши коллаборации</h2>
+            <div class="collaborators">
+                <div class="collaborator-card">
+                    <h3>Qewbite</h3>
+			<a href="https://youtu.be/NZJm9r2OAFQ?si=UTM4LIhSF5xgS7ZK">
+                    <p>- Мульт на 1к подписчиков</p>
+			</a>
+                </div>
+                <div class="collaborator-card">
+                    <h3>Голос Васи</h3>
+                    <a href="https://youtu.be/s5RZeKseC4w?si=tyTY59gsqhy9jhwG">
+                    <p>- Генри Стикмин: Убить наемника</p>
+			<a href="https://youtu.be/NZJm9r2OAFQ?si=UTM4LIhSF5xgS7ZK">
+                    	<p>- Мульт на 1к подписчиков</p>
+			</a>
+                </div>
+                <div class="collaborator-card">
+                    <h3>Ислам Ганджаев</h3>
+                    <a href="https://youtu.be/NZJm9r2OAFQ?si=UTM4LIhSF5xgS7ZK">
+                    <p>- Мульт на 1к подписчиков</p>
+			</a>
+                </div>
+                <div class="collaborator-card">
+                    <h3>Уголок Акра</h3>
+                    <a href="https://youtu.be/s5RZeKseC4w?si=tyTY59gsqhy9jhwG">
+                    <p>- Генри Стикмин: Убить наемника</p>
+			</a>
+                </div>
+                <div class="collaborator-card">
+                    <h3>Lender</h3>
+                    <a href="https://youtu.be/s5RZeKseC4w?si=tyTY59gsqhy9jhwG">
+                    <p>- Генри Стикмин: Убить наемника и многое другое...</p>
+			<a href="https://youtu.be/NZJm9r2OAFQ?si=UTM4LIhSF5xgS7ZK">
+                    	<p>- Мульт на 1к подписчиков</p>
+			<a href="https://youtu.be/tiYUGcVEsOA?si=_Vr0vIgPl7h5UtwZ">
+                    	<p>- Пацаны: Хоумлендер против Рождества</p>
+			<a href="https://youtu.be/-AxZqgc1c4k?si=ig1DNKYioytdPxcd">
+                    	<p>- Оскарпул 2020</p>
+			<a href="https://youtu.be/k9i9hNBOKe8?si=7Olh-OHeFEk5P-5u">
+                    	<p>- Фан-трейлер "Дэдпул 3"</p>
+			<a href="https://youtu.be/cgWbwqTbRxc?si=ku9qyBIHTL4DmHqd">
+                    	<p>- Фан-трейлер "Мортал комбат"</p>
+			</a>
+                </div>
+                <div class="collaborator-card">
+                    <h3>Сергей Пономарев</h3>
+                    <a href="https://youtu.be/NZJm9r2OAFQ?si=UTM4LIhSF5xgS7ZK">
+                    <p>- Мульт на 1к подписчиков</p>
+			</a>
+                </div>
+                <div class="collaborator-card">
+                    <h3>Westl</h3>
+                    <a href="https://youtu.be/ff1vVOZaDqY?si=eS1CXUWCXFCoFpIP">
+                    <p>- Фан-трейлер "Паук-человек"</p>
+			</a>
+                </div>
+                <div class="collaborator-card">
+                    <h3>GIKAND</h3>
+                    <a href="https://youtu.be/ntMib4xneto?si=2Y9t_NwFslJMhtxC">
+                    <p>- Фан-трейлер "Северный паук"</p>
+			</a>
+                </div>
+                <div class="collaborator-card">
+                    <h3>SEDOVSKY</h3>
+                    <a href="https://youtu.be/hWRkIeHGFlo?si=bnqIt5f_jAI_G-AL">
+                    <p>- Фан-трейлер "Человек-паук Нуар"</p>
+			</a>
+		</div>
+                <div class="collaborator-card">
+                    <h3>Venord</h3>
+                    <a href="https://youtu.be/k7r09007X34?si=gaiMq9JJrxYin52L">
+                    <p>- Фан-трейлер "Человек-паук 2099"</p>
+			</a>
+                </div>
+                <div class="collaborator-card">
+                    <h3>Bein Geek</h3>
+                    <a href="https://youtu.be/cgWbwqTbRxc?si=31T7d7J4jDy9iXZF">
+                    <p>- Фан-трейлер "Мортал комбат"</p>
+			</a>
+                </div>
+                <div class="collaborator-card">
+                    <h3>AndSash</h3>
+                    <a href="https://youtu.be/mzgPssE7kG4?si=sEUIVyLS3aEvfLcd">
+                    <p>- Фан-трейлер "Бэтмен 2"</p>
+			</a>
+                </div>
+                <div class="collaborator-card">
+                    <h3>BELFEGOR</h3>
+                    <a href="https://youtu.be/rBLrz4_XNIM?si=aqMq1rwfBGW0xAYH">
+                    <p>- Фан-трейлер "Добро пожаловать в Дэрри"</p>
+			</a>
+                </div>
+                <div class="collaborator-card">
+                    <h3>Davydenko Art</h3>
+                    <a href="https://youtu.be/JiQ07IMeZqk?si=4ipt4sK9Ge4gqPhY">
+                    <p>- Фан-трейлер "Черепашки-ниндзя: Последний ронин"</p>
+			</a>
+                </div>
+                <div class="collaborator-card">
+                    <h3>Mystery Basket</h3>
+                    <a href="https://youtu.be/LUwMfFupRSQ?si=oD4VSXNOYiL3gFOG">
+                    <p>- Фан-трейлер "Фонд SCP"</p>
+			</a>
+                </div>
+                <div class="collaborator-card">
+                    <h3>Wing13</h3>
+                    <a href="https://youtu.be/LUwMfFupRSQ?si=oD4VSXNOYiL3gFOG">
+                    <p>- Фан-трейлер "Фонд SCP"</p>
+			</a>
+                </div>
+                <div class="collaborator-card">
+                    <h3>ASHOTIX</h3>
+                    <a href="https://youtu.be/EyzvmahxJ0c?si=Q6TAr3I_5KvCHs29">
+                    <p>- ВСЕ ОТСЫЛКИ И ПАСХАЛКИ В "ГЕНРИ СТИКМИН: УБИТЬ НАЕМНИКА"</p>
+			</a>
+                </div>
+                <div class="collaborator-card">
+                    <h3>Горох С Очками</h3>
+                    <a href="https://youtu.be/LKCCQy1zXok?si=tVYugfXRLEmPSuQW">
+                    <p>- Фан-трейлер "Растения против Зомби: Сады войны"</p>
+			</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Tab -->
+        <div class="tab-content" id="about-content">
+            <section class="about-section">
+                <h2>О нашей студии</h2>
+                <div class="studio-info">
+                    <img src="./images/logofinn.png" alt="Finn22 Studio" class="floating">
+                    <div class="studio-text">
+                        <p>Finn22 Studio - это креативная анимационная студия, специализирующаяся на создании уникального контента для YouTube. Мы объединяем талантливых аниматоров для производства качественного визуального контента.</p>
+                        <p>Наш канал был основан в 2018 году и с тех пор мы выпустили более 200 анимационных работ, собравших тысячи просмотров.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="about-section">
+                <h2>Наше портфолио</h2>
+                <div class="portfolio">
+                    <div class="portfolio-item">
+                        <img src="./images/henryposter.jpg" alt="Проект 1">
+                        <div class="portfolio-overlay">
+                            <h3>Генри Стикмин: Убить наемника</h3>
+                            <a href="https://www.youtube.com/watch?v=s5RZeKseC4w&t=155s" rel="noopener noreferrer" target="_blank" style="color: var(--watermelon-pink);">Смотреть на YouTube</a>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <img src="./images/osc20.jpg" alt="Проект 2">
+                        <div class="portfolio-overlay">
+                            <h3>Оскарпул 2020</h3>
+                            <a href="https://youtu.be/-AxZqgc1c4k?si=YfnsjhY7afQOv3W5" rel="noopener noreferrer" target="_blank" style="color: var(--watermelon-pink);">Смотреть на YouTube</a>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <img src="./images/ng.jpg" alt="Проект 3">
+                        <div class="portfolio-overlay">
+                            <h3>Пацаны: Хоумлендер против Рождества</h3>
+                            <a href="https://youtu.be/tiYUGcVEsOA?si=9FMKmx91oTDRDhCk" rel="noopener noreferrer" target="_blank" style="color: var(--watermelon-pink);">Смотреть на YouTube</a>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <img src="./images/1k.jpg" alt="Проект 4">
+                        <div class="portfolio-overlay">
+                            <h3>Мульт на 1к подписчиков</h3>
+                            <a href="https://youtu.be/NZJm9r2OAFQ?si=ve8sg2_5vtbhsba6" rel="noopener noreferrer" target="_blank" style="color: var(--watermelon-pink);">Смотреть на YouTube</a>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <img src="./images/osc19.jpg" alt="Проект 5">
+                        <div class="portfolio-overlay">
+                            <h3>Оскарпул 2019</h3>
+                            <a href="https://youtu.be/dkGFEdhaexo?si=c7YQOHo7odb81s6n" rel="noopener noreferrer" target="_blank" style="color: var(--watermelon-pink);">Смотреть на YouTube</a>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <img src="./images/nuts.png" alt="Проект 6">
+                        <div class="portfolio-overlay">
+                            <h3>Орешки</h3>
+                            <a href="https://www.youtube.com/playlist?list=PLvOqnmsWMYY0oKh_lDEyoRXgXHzxJRHzF" rel="noopener noreferrer" target="_blank" style="color: var(--watermelon-pink);">Смотреть на YouTube</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="about-section">
+                <h2>Предстоящие проекты</h2>
+                <div class="upcoming-projects">
+                    <div class="project-list">
+                        <div class="project-item">
+                            <h3>Мультсериал "Пингвин"</h3>
+                            <p>Ожидаемая дата выхода: 2025</p>
+                        </div>
+                        <div class="project-item">
+                            <h3>Мультсериал "Человек-паук: Негативный смех"</h3>
+                            <p>В разработке, старт производства: 2025</p>
+                        </div>
+                        <div class="project-item">
+                            <h3>Короткометражка "Бродяжная жизнь"</h3>
+                            <p>Старт производства: неизвестно</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Contacts Tab -->
+        <div class="tab-content" id="contacts-content">
+            <div class="contacts-container">
+                <div class="contact-info">
+                    <h3>Свяжитесь с нами</h3>
+                    <div class="contact-method">
+                        <div class="contact-icon">✉️</div>
+                        <div>
+                            <h4>Email</h4>
+                            <p>deadpoolblog63@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-method">
+                        <div class="contact-icon">📱</div>
+                        <div>
+                            <h4>Телефон</h4>
+                            <p>+7 (950) 865-22-06</p>
+                        </div>
+                    </div>
+                    <div class="contact-method">
+                        <div class="contact-icon">📍</div>
+                        <div>
+                            <h4>Адрес</h4>
+                            <p>Ростов-на-Дону, ул. Арбузная 22</p>
+                        </div>
+                    </div>
+                    <div class="contact-method">
+                        <div class="contact-icon">🕒</div>
+                        <div>
+                            <h4>Часы работы</h4>
+                            <p>Пн-Пт: 10:00 - 22:00</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <h3>Форма обратной связи</h3>
+                    <form id="feedback-form">
+                        <div class="form-group">
+                            <label for="name">Ваше имя</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Ваш email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Сообщение</label>
+                            <textarea id="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn pulse">Отправить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="https://www.youtube.com/@Finn22Studio" class="social-link">YT</a>
+                <a href="https://web.telegram.org/a/#-1001632145251" class="social-link">TG</a>
+                <a href="https://vk.com/finn22_studio?from=groups" class="social-link">VK</a>
+            </div>
+            <p class="copyright">© 2025 Finn22 Studio. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('nav-menu');
+
+            // Tab switching
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links and contents
+                    navLinks.forEach(l => l.classList.remove('active-tab'));
+                    tabContents.forEach(content => content.classList.remove('active-content'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active-tab');
+                    
+                    // Show corresponding content
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(`${tabId}-content`).classList.add('active-content');
+                });
+            });
+
+            // Mobile menu toggle
+            hamburger.addEventListener('click', function() {
+                navMenu.classList.toggle('show');
+            });
+
+            // Form submission
+            const feedbackForm = document.getElementById('feedback-form');
+            if (feedbackForm) {
+                feedbackForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.');
+                    this.reset();
+                });
+            }
+
+            // Floating animation for collaborator cards
+            const cards = document.querySelectorAll('.collaborator-card');
+            cards.forEach((card, index) => {
+                // Random delay for animation
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+
+            // Add hover effect to project items
+            const projectItems = document.querySelectorAll('.project-item');
+            projectItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.borderLeftColor = 'var(--watermelon-green)';
+                });
+                item.addEventListener('mouseleave', function() {
+                    this.style.borderLeftColor = 'var(--watermelon-red)';
+                });
+            });
+
+            // Add parallax effect to hero section
+            window.addEventListener('scroll', function() {
+                const hero = document.querySelector('.hero');
+                if (hero) {
+                    const scrollPosition = window.pageYOffset;
+                    hero.style.backgroundPositionY = `${scrollPosition * 0.5}px`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
